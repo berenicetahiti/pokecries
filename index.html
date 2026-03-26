@@ -67,51 +67,68 @@
       font-size: 0.9rem;
       color: var(--muted);
     }
+    .score-bar span strong { color: var(--text); }
 
-    .score-bar span strong {
-      color: var(--text);
-    }
-
-    /* Generation selector */
-    .gen-selector {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .gen-selector label {
+    /* Section labels */
+    .section-label {
       font-size: 0.8rem;
       color: var(--muted);
-      width: 100%;
-      margin-bottom: 0.2rem;
+      margin-bottom: 0.4rem;
     }
 
+    /* Filter sections */
+    .filter-section {
+      margin-bottom: 1rem;
+    }
+
+    .filter-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    /* Gen buttons */
     .gen-btn {
       background: #0f3460;
       border: 1px solid #2a3a5c;
       color: var(--muted);
       border-radius: 6px;
-      padding: 0.25rem 0.6rem;
+      padding: 0.22rem 0.55rem;
       cursor: pointer;
-      font-size: 0.8rem;
+      font-size: 0.78rem;
+      font-weight: 600;
       transition: all 0.2s;
     }
-
     .gen-btn.active {
       background: var(--blue);
       border-color: var(--blue);
       color: #fff;
     }
 
-    /* Pokémon silhouette zone */
+    /* Type badges */
+    .type-btn {
+      border: 2px solid transparent;
+      border-radius: 20px;
+      padding: 0.2rem 0.65rem;
+      cursor: pointer;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: #fff;
+      opacity: 0.35;
+      transition: opacity 0.2s, transform 0.1s;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    }
+    .type-btn.active { opacity: 1; }
+    .type-btn:active { transform: scale(0.95); }
+
+    /* Pokémon zone */
     .pokemon-zone {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      min-height: 160px;
+      gap: 0.6rem;
+      margin-bottom: 1.2rem;
+      min-height: 150px;
       justify-content: center;
     }
 
@@ -125,38 +142,60 @@
       width: 120px;
       height: 120px;
       object-fit: contain;
-      filter: brightness(0) invert(0);
       transition: filter 0.5s;
     }
 
-    .pokemon-img-wrapper img.hidden-sprite {
-      filter: brightness(0);
-    }
+    .pokemon-img-wrapper img.hidden-sprite  { filter: brightness(0); }
+    .pokemon-img-wrapper img.visible-sprite { filter: none; }
+    .pokemon-img-wrapper img.revealed-sprite { filter: none; }
 
-    .pokemon-img-wrapper img.revealed-sprite {
-      filter: none;
-    }
-
-    .pokemon-number {
-      font-size: 0.75rem;
+    /* Shadow toggle */
+    .shadow-toggle {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
       color: var(--muted);
+      cursor: pointer;
+      user-select: none;
     }
+
+    .toggle-track {
+      width: 36px;
+      height: 20px;
+      border-radius: 10px;
+      background: #2a3a5c;
+      position: relative;
+      transition: background 0.2s;
+      flex-shrink: 0;
+    }
+    .toggle-track.on { background: var(--blue); }
+
+    .toggle-thumb {
+      position: absolute;
+      top: 3px;
+      left: 3px;
+      width: 14px;
+      height: 14px;
+      border-radius: 50%;
+      background: #fff;
+      transition: left 0.2s;
+    }
+    .toggle-track.on .toggle-thumb { left: 19px; }
 
     /* Waveform animation */
     .waveform {
       display: flex;
       align-items: center;
       gap: 3px;
-      height: 32px;
+      height: 28px;
     }
 
     .waveform .bar {
       width: 4px;
       background: var(--blue);
       border-radius: 2px;
-      animation: none;
       height: 4px;
-      transition: height 0.1s;
     }
 
     .waveform.playing .bar {
@@ -172,7 +211,7 @@
 
     @keyframes wave {
       0%, 100% { height: 4px; }
-      50% { height: 28px; }
+      50%       { height: 24px; }
     }
 
     /* Buttons */
@@ -191,8 +230,7 @@
       padding: 0.6rem 1.2rem;
       transition: opacity 0.2s, transform 0.1s;
     }
-
-    button:active { transform: scale(0.97); }
+    button:active  { transform: scale(0.97); }
     button:disabled { opacity: 0.4; cursor: not-allowed; }
 
     .btn-play {
@@ -208,7 +246,6 @@
       font-size: 0.8rem;
       padding: 0.6rem 0.8rem;
     }
-
     .btn-cry-type.active {
       background: var(--blue);
       border-color: var(--blue);
@@ -233,14 +270,8 @@
       outline: none;
       transition: border-color 0.2s;
     }
-
-    .input-zone input:focus {
-      border-color: var(--blue);
-    }
-
-    .input-zone input::placeholder {
-      color: var(--muted);
-    }
+    .input-zone input:focus    { border-color: var(--blue); }
+    .input-zone input::placeholder { color: var(--muted); }
 
     .btn-validate {
       background: var(--red);
@@ -263,24 +294,9 @@
       transition: all 0.3s;
       background: transparent;
     }
-
-    .feedback.correct {
-      background: rgba(76, 175, 80, 0.15);
-      border: 1px solid var(--green);
-      color: var(--green);
-    }
-
-    .feedback.wrong {
-      background: rgba(227, 53, 13, 0.15);
-      border: 1px solid var(--red);
-      color: #ff6b4a;
-    }
-
-    .feedback.skipped {
-      background: rgba(255, 152, 0, 0.15);
-      border: 1px solid var(--orange);
-      color: var(--orange);
-    }
+    .feedback.correct { background: rgba(76,175,80,.15); border: 1px solid var(--green);  color: var(--green); }
+    .feedback.wrong   { background: rgba(227,53,13,.15); border: 1px solid var(--red);    color: #ff6b4a; }
+    .feedback.skipped { background: rgba(255,152,0,.15); border: 1px solid var(--orange); color: var(--orange); }
 
     /* Skip / Next */
     .btn-row-bottom {
@@ -302,16 +318,10 @@
       color: #222;
       flex: 1;
     }
-
-    .btn-next:disabled {
-      background: #2a3a5c;
-      color: var(--muted);
-    }
+    .btn-next:disabled { background: #2a3a5c; color: var(--muted); }
 
     /* Autocomplete */
-    .autocomplete-wrapper {
-      position: relative;
-    }
+    .autocomplete-wrapper { position: relative; flex: 1; }
 
     .autocomplete-list {
       position: absolute;
@@ -321,7 +331,7 @@
       background: #0f3460;
       border: 1px solid #2a3a5c;
       border-radius: 8px;
-      max-height: 160px;
+      max-height: 200px;
       overflow-y: auto;
       z-index: 100;
       margin-bottom: 4px;
@@ -329,17 +339,28 @@
 
     .autocomplete-list li {
       list-style: none;
-      padding: 0.5rem 0.8rem;
+      padding: 0.35rem 0.7rem;
       cursor: pointer;
       font-size: 0.9rem;
-      text-transform: capitalize;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
     }
-
     .autocomplete-list li:hover,
     .autocomplete-list li.selected {
       background: var(--blue);
       color: #fff;
     }
+
+    .ac-icon {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+      image-rendering: pixelated;
+      flex-shrink: 0;
+    }
+
+    .ac-name { text-transform: capitalize; }
 
     /* Loading spinner */
     .spinner {
@@ -350,10 +371,7 @@
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
     }
-
-    @keyframes spin {
-      to { transform: rotate(360deg); }
-    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     footer {
       margin-top: 1.5rem;
@@ -361,8 +379,14 @@
       font-size: 0.75rem;
       text-align: center;
     }
-
     footer a { color: var(--blue); text-decoration: none; }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid #2a3a5c;
+      margin: 0.8rem 0;
+    }
   </style>
 </head>
 <body>
@@ -372,6 +396,7 @@
   </header>
 
   <div class="card">
+
     <!-- Score -->
     <div class="score-bar">
       <span>Score : <strong id="score">0</strong></span>
@@ -379,19 +404,31 @@
       <span>Total : <strong id="total">0</strong></span>
     </div>
 
-    <!-- Génération -->
-    <div class="gen-selector">
-      <label>Générations :</label>
-      <button class="gen-btn active" data-start="1" data-end="151">Gen I</button>
-      <button class="gen-btn active" data-start="152" data-end="251">Gen II</button>
-      <button class="gen-btn active" data-start="252" data-end="386">Gen III</button>
-      <button class="gen-btn active" data-start="387" data-end="493">Gen IV</button>
-      <button class="gen-btn active" data-start="494" data-end="649">Gen V</button>
-      <button class="gen-btn active" data-start="650" data-end="721">Gen VI</button>
-      <button class="gen-btn active" data-start="722" data-end="809">Gen VII</button>
-      <button class="gen-btn active" data-start="810" data-end="905">Gen VIII</button>
-      <button class="gen-btn active" data-start="906" data-end="1025">Gen IX</button>
+    <hr class="divider" />
+
+    <!-- Générations -->
+    <div class="filter-section">
+      <div class="section-label">Générations :</div>
+      <div class="filter-row" id="gen-filter">
+        <button class="gen-btn active" data-start="1"   data-end="151">Gen I</button>
+        <button class="gen-btn active" data-start="152" data-end="251">Gen II</button>
+        <button class="gen-btn active" data-start="252" data-end="386">Gen III</button>
+        <button class="gen-btn active" data-start="387" data-end="493">Gen IV</button>
+        <button class="gen-btn active" data-start="494" data-end="649">Gen V</button>
+        <button class="gen-btn active" data-start="650" data-end="721">Gen VI</button>
+        <button class="gen-btn active" data-start="722" data-end="809">Gen VII</button>
+        <button class="gen-btn active" data-start="810" data-end="905">Gen VIII</button>
+        <button class="gen-btn active" data-start="906" data-end="1025">Gen IX</button>
+      </div>
     </div>
+
+    <!-- Types -->
+    <div class="filter-section">
+      <div class="section-label">Types <span style="color:#555;font-size:0.75rem;">(aucun = tous)</span> :</div>
+      <div class="filter-row" id="type-filter"></div>
+    </div>
+
+    <hr class="divider" />
 
     <!-- Zone Pokémon -->
     <div class="pokemon-zone">
@@ -400,26 +437,29 @@
         <img id="pokemon-sprite" src="" alt="Pokémon" class="hidden-sprite" />
       </div>
       <div class="waveform" id="waveform">
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
-        <div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div>
         <div class="bar"></div>
       </div>
+      <!-- Shadow toggle -->
+      <label class="shadow-toggle" id="shadow-toggle" title="Afficher ou masquer la silhouette">
+        <div class="toggle-track on" id="toggle-track">
+          <div class="toggle-thumb"></div>
+        </div>
+        <span id="shadow-label">Ombre activée</span>
+      </label>
     </div>
 
     <!-- Contrôles audio -->
     <div class="btn-row">
       <button class="btn-play" id="btn-play" disabled>▶ Jouer le cri</button>
-      <button class="btn-cry-type active" id="btn-latest" title="Cri moderne (Gen VI+)">Moderne</button>
-      <button class="btn-cry-type" id="btn-legacy" title="Cri rétro (Gen I-V)">Rétro</button>
+      <button class="btn-cry-type active" id="btn-latest">Moderne</button>
+      <button class="btn-cry-type"        id="btn-legacy">Rétro</button>
     </div>
 
     <!-- Saisie -->
     <div class="input-zone">
-      <div class="autocomplete-wrapper" style="flex:1; position:relative;">
+      <div class="autocomplete-wrapper">
         <input
           type="text"
           id="guess-input"
@@ -440,55 +480,92 @@
       <button class="btn-skip" id="btn-skip" disabled>Passer</button>
       <button class="btn-next" id="btn-next" disabled>Pokémon suivant ›</button>
     </div>
+
   </div>
 
   <footer>
-    Données : <a href="https://pokeapi.co" target="_blank">PokéAPI</a> · Cris : <a href="https://github.com/PokeAPI/cries" target="_blank">PokeAPI/cries</a>
+    Données : <a href="https://pokeapi.co" target="_blank">PokéAPI</a> ·
+    Cris : <a href="https://github.com/PokeAPI/cries" target="_blank">PokeAPI/cries</a>
   </footer>
 
   <audio id="cry-audio" preload="auto"></audio>
 
   <script>
-    // ── State ─────────────────────────────────────────────────────────────
+    const TYPE_INFO = [
+      { id:  1, fr: 'Normal',   color: '#9199A1' },
+      { id:  2, fr: 'Combat',   color: '#CE4069' },
+      { id:  3, fr: 'Vol',      color: '#8FA8DD' },
+      { id:  4, fr: 'Poison',   color: '#AB6AC8' },
+      { id:  5, fr: 'Sol',      color: '#D97746' },
+      { id:  6, fr: 'Roche',    color: '#C7B78B' },
+      { id:  7, fr: 'Insecte',  color: '#90C12C' },
+      { id:  8, fr: 'Spectre',  color: '#5269AC' },
+      { id:  9, fr: 'Acier',    color: '#5A8EA1' },
+      { id: 10, fr: 'Feu',      color: '#FF9C54' },
+      { id: 11, fr: 'Eau',      color: '#4D90D5' },
+      { id: 12, fr: 'Plante',   color: '#63BB5B' },
+      { id: 13, fr: 'Électrik', color: '#F3D23B' },
+      { id: 14, fr: 'Psy',      color: '#F97176' },
+      { id: 15, fr: 'Glace',    color: '#74CEC0' },
+      { id: 16, fr: 'Dragon',   color: '#0A6DC4' },
+      { id: 17, fr: 'Ténèbres', color: '#5A5366' },
+      { id: 18, fr: 'Fée',      color: '#EC8FE6' },
+    ];
+
     const state = {
-      allPokemon: [],        // [{id, name}] from selected gens
-      currentPokemon: null,  // {id, name, cries, sprite}
+      filteredPool: [],
+      currentPokemon: null,
       answered: false,
       score: 0,
       streak: 0,
       total: 0,
-      cryType: 'latest',     // 'latest' | 'legacy'
-      activeGens: new Set(), // filled from buttons
+      cryType: 'latest',
+      shadowMode: true,
+      activeGens: new Set(),
+      activeTypes: new Set(),
+      pokemonTypeMap: new Map(),
+      typesLoaded: false,
     };
 
-    // ── DOM refs ──────────────────────────────────────────────────────────
     const $ = id => document.getElementById(id);
-    const elScore    = $('score');
-    const elStreak   = $('streak');
-    const elTotal    = $('total');
-    const elLoading  = $('loading');
-    const elImgWrap  = $('img-wrapper');
-    const elSprite   = $('pokemon-sprite');
-    const elWaveform = $('waveform');
-    const elBtnPlay  = $('btn-play');
-    const elBtnLatest = $('btn-latest');
-    const elBtnLegacy = $('btn-legacy');
-    const elInput    = $('guess-input');
-    const elValidate = $('btn-validate');
-    const elFeedback = $('feedback');
-    const elSkip     = $('btn-skip');
-    const elNext     = $('btn-next');
-    const elAcList   = $('autocomplete-list');
-    const elAudio    = $('cry-audio');
+    const elScore      = $('score');
+    const elStreak     = $('streak');
+    const elTotal      = $('total');
+    const elLoading    = $('loading');
+    const elImgWrap    = $('img-wrapper');
+    const elSprite     = $('pokemon-sprite');
+    const elWaveform   = $('waveform');
+    const elBtnPlay    = $('btn-play');
+    const elBtnLatest  = $('btn-latest');
+    const elBtnLegacy  = $('btn-legacy');
+    const elInput      = $('guess-input');
+    const elValidate   = $('btn-validate');
+    const elFeedback   = $('feedback');
+    const elSkip       = $('btn-skip');
+    const elNext       = $('btn-next');
+    const elAcList     = $('autocomplete-list');
+    const elAudio      = $('cry-audio');
+    const elToggle     = $('shadow-toggle');
+    const elTrack      = $('toggle-track');
+    const elShadowLbl  = $('shadow-label');
+    const elTypeFilter = $('type-filter');
 
-    // ── Generations ───────────────────────────────────────────────────────
-    const genBtns = document.querySelectorAll('.gen-btn');
-    genBtns.forEach(btn => {
+    // Shadow toggle
+    elToggle.addEventListener('click', () => {
+      state.shadowMode = !state.shadowMode;
+      elTrack.classList.toggle('on', state.shadowMode);
+      elShadowLbl.textContent = state.shadowMode ? 'Ombre activée' : 'Ombre désactivée';
+      if (!state.answered && state.currentPokemon?.sprite) {
+        elSprite.className = state.shadowMode ? 'hidden-sprite' : 'visible-sprite';
+      }
+    });
+
+    // Generations
+    document.querySelectorAll('.gen-btn').forEach(btn => {
       state.activeGens.add(btn.dataset.start + '-' + btn.dataset.end);
       btn.addEventListener('click', () => {
         const key = btn.dataset.start + '-' + btn.dataset.end;
         if (state.activeGens.has(key)) {
-          // Don't allow deselecting all
           if (state.activeGens.size === 1) return;
           state.activeGens.delete(key);
           btn.classList.remove('active');
@@ -500,66 +577,102 @@
       });
     });
 
-    // ── Pokemon list cache (names only, no API needed) ────────────────────
-    // We'll use the PokéAPI /pokemon?limit= endpoint to get all names+ids
-    let fullList = []; // [{id, name}]
+    // Types UI
+    function buildTypeUI() {
+      TYPE_INFO.forEach(t => {
+        const btn = document.createElement('button');
+        btn.className = 'type-btn';
+        btn.textContent = t.fr;
+        btn.style.background = t.color;
+        btn.dataset.typeId = t.id;
+        btn.addEventListener('click', () => {
+          if (state.activeTypes.has(t.id)) {
+            state.activeTypes.delete(t.id);
+            btn.classList.remove('active');
+          } else {
+            state.activeTypes.add(t.id);
+            btn.classList.add('active');
+          }
+          buildPool();
+        });
+        elTypeFilter.appendChild(btn);
+      });
+    }
+
+    let fullList = [];
 
     async function loadFullList() {
-      // PokéAPI allows up to 100000 limit — fetch all at once
       const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=1025&offset=0');
       const data = await res.json();
-      fullList = data.results.map((p, i) => ({
-        id: i + 1,
-        name: p.name,
-      }));
+      fullList = data.results.map((p, i) => ({ id: i + 1, name: p.name }));
       buildPool();
       nextPokemon();
     }
 
-    function buildPool() {
-      state.allPokemon = [];
-      for (const key of state.activeGens) {
-        const [start, end] = key.split('-').map(Number);
-        const slice = fullList.filter(p => p.id >= start && p.id <= end);
-        state.allPokemon.push(...slice);
-      }
+    async function loadTypeMap() {
+      try {
+        const fetches = TYPE_INFO.map(t =>
+          fetch(`https://pokeapi.co/api/v2/type/${t.id}`).then(r => r.json())
+        );
+        const results = await Promise.all(fetches);
+        results.forEach((data, idx) => {
+          const typeId = TYPE_INFO[idx].id;
+          data.pokemon.forEach(entry => {
+            const parts = entry.pokemon.url.split('/').filter(Boolean);
+            const pokeId = parseInt(parts[parts.length - 1], 10);
+            if (!state.pokemonTypeMap.has(pokeId)) state.pokemonTypeMap.set(pokeId, []);
+            state.pokemonTypeMap.get(pokeId).push(typeId);
+          });
+        });
+        state.typesLoaded = true;
+        buildPool();
+      } catch (e) {}
     }
 
-    // ── Load a random Pokémon ─────────────────────────────────────────────
-    async function nextPokemon() {
-      if (state.allPokemon.length === 0) return;
+    function buildPool() {
+      let pool = [];
+      for (const key of state.activeGens) {
+        const [start, end] = key.split('-').map(Number);
+        pool.push(...fullList.filter(p => p.id >= start && p.id <= end));
+      }
+      if (state.typesLoaded && state.activeTypes.size > 0) {
+        pool = pool.filter(p => {
+          const types = state.pokemonTypeMap.get(p.id) || [];
+          return types.some(tid => state.activeTypes.has(tid));
+        });
+      }
+      state.filteredPool = pool;
+    }
 
+    async function nextPokemon() {
+      const pool = state.filteredPool.length > 0 ? state.filteredPool : fullList;
+      if (pool.length === 0) return;
       setLoading(true);
       resetUI();
-
-      const pick = state.allPokemon[Math.floor(Math.random() * state.allPokemon.length)];
-
+      const pick = pool[Math.floor(Math.random() * pool.length)];
       try {
         const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${pick.id}`);
         const data = await res.json();
-
         state.currentPokemon = {
           id: data.id,
           name: data.name,
           cries: data.cries,
           sprite: data.sprites?.other?.['official-artwork']?.front_default
-               || data.sprites?.front_default
-               || null,
+               || data.sprites?.front_default || null,
         };
-
         setLoading(false);
         showPokemon();
         playCry();
       } catch (e) {
         setLoading(false);
-        elFeedback.textContent = 'Erreur de chargement, réessaie.';
+        showFeedback('wrong', 'Erreur de chargement, réessaie.');
       }
     }
 
     function showPokemon() {
       if (state.currentPokemon.sprite) {
         elSprite.src = state.currentPokemon.sprite;
-        elSprite.className = 'hidden-sprite';
+        elSprite.className = state.shadowMode ? 'hidden-sprite' : 'visible-sprite';
         elImgWrap.style.display = 'block';
       }
       elBtnPlay.disabled = false;
@@ -568,7 +681,6 @@
       elSkip.disabled = false;
     }
 
-    // ── Audio ─────────────────────────────────────────────────────────────
     function getCryUrl() {
       const p = state.currentPokemon;
       if (!p) return null;
@@ -583,10 +695,9 @@
       elAudio.play().catch(() => {});
     }
 
-    elAudio.addEventListener('play', () => elWaveform.classList.add('playing'));
+    elAudio.addEventListener('play',  () => elWaveform.classList.add('playing'));
     elAudio.addEventListener('ended', () => elWaveform.classList.remove('playing'));
     elAudio.addEventListener('pause', () => elWaveform.classList.remove('playing'));
-
     elBtnPlay.addEventListener('click', playCry);
 
     elBtnLatest.addEventListener('click', () => {
@@ -603,25 +714,27 @@
       if (!state.answered) playCry();
     });
 
-    // ── Autocomplete ──────────────────────────────────────────────────────
     let acIndex = -1;
 
     elInput.addEventListener('input', () => {
       const val = elInput.value.trim().toLowerCase();
       if (val.length < 2) { hideAc(); return; }
-
-      const matches = fullList
-        .filter(p => p.name.includes(val))
-        .slice(0, 8);
-
+      const matches = fullList.filter(p => p.name.includes(val)).slice(0, 8);
       if (matches.length === 0) { hideAc(); return; }
-
       elAcList.innerHTML = '';
       acIndex = -1;
-      matches.forEach((p, i) => {
+      matches.forEach(p => {
         const li = document.createElement('li');
-        li.textContent = capitalize(p.name);
         li.dataset.name = p.name;
+        const img = document.createElement('img');
+        img.className = 'ac-icon';
+        img.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.id}.png`;
+        img.alt = '';
+        const span = document.createElement('span');
+        span.className = 'ac-name';
+        span.textContent = capitalize(p.name);
+        li.appendChild(img);
+        li.appendChild(span);
         li.addEventListener('mousedown', e => {
           e.preventDefault();
           elInput.value = capitalize(p.name);
@@ -637,17 +750,12 @@
       const items = elAcList.querySelectorAll('li');
       if (e.key === 'ArrowDown') {
         acIndex = Math.min(acIndex + 1, items.length - 1);
-        updateAcHighlight(items);
-        e.preventDefault();
+        updateAcHighlight(items); e.preventDefault();
       } else if (e.key === 'ArrowUp') {
         acIndex = Math.max(acIndex - 1, -1);
-        updateAcHighlight(items);
-        e.preventDefault();
+        updateAcHighlight(items); e.preventDefault();
       } else if (e.key === 'Enter') {
-        if (acIndex >= 0 && items[acIndex]) {
-          elInput.value = items[acIndex].dataset.name.split('-').map(capitalize).join(' ');
-          hideAc();
-        }
+        if (acIndex >= 0 && items[acIndex]) { elInput.value = items[acIndex].dataset.name; hideAc(); }
         validate();
       }
     });
@@ -659,79 +767,53 @@
       if (acIndex >= 0 && items[acIndex]) items[acIndex].scrollIntoView({ block: 'nearest' });
     }
 
-    function hideAc() {
-      elAcList.style.display = 'none';
-      acIndex = -1;
-    }
+    function hideAc() { elAcList.style.display = 'none'; acIndex = -1; }
 
-    // ── Validation ────────────────────────────────────────────────────────
     elValidate.addEventListener('click', validate);
 
     function normalize(str) {
-      return str
-        .toLowerCase()
-        .trim()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '') // strip accents
-        .replace(/[^a-z0-9]/g, '');      // keep only alphanumeric
+      return str.toLowerCase().trim()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+        .replace(/[^a-z0-9]/g, '');
     }
 
     function validate() {
       if (state.answered || !state.currentPokemon) return;
       hideAc();
-
       const guess = elInput.value;
-      const correct = state.currentPokemon.name;
-
       if (!guess.trim()) return;
-
-      // Accept partial match on normalized name
-      const normGuess = normalize(guess);
-      const normCorrect = normalize(correct);
-
-      // Also build display name without form suffix (e.g. "pikachu-original" → "pikachu")
+      const correct  = state.currentPokemon.name;
       const baseName = correct.split('-')[0];
-      const normBase = normalize(baseName);
-
-      const isCorrect = normGuess === normCorrect || normGuess === normBase;
-
+      const isCorrect = normalize(guess) === normalize(correct) || normalize(guess) === normalize(baseName);
       state.answered = true;
       state.total++;
-
       if (isCorrect) {
-        state.score++;
-        state.streak++;
+        state.score++; state.streak++;
         showFeedback('correct', `Bravo ! C'était bien ${capitalize(correct)} !`);
       } else {
         state.streak = 0;
         showFeedback('wrong', `Raté ! C'était ${capitalize(correct)}.`);
       }
-
       updateScore();
       revealSprite();
-      elInput.disabled = true;
-      elValidate.disabled = true;
-      elSkip.disabled = true;
-      elNext.disabled = false;
+      lockInputs();
     }
 
     elSkip.addEventListener('click', () => {
       if (state.answered || !state.currentPokemon) return;
-      state.answered = true;
-      state.total++;
-      state.streak = 0;
-      updateScore();
-      revealSprite();
+      state.answered = true; state.total++; state.streak = 0;
+      updateScore(); revealSprite();
       showFeedback('skipped', `C'était ${capitalize(state.currentPokemon.name)}.`);
-      elInput.disabled = true;
-      elValidate.disabled = true;
-      elSkip.disabled = true;
-      elNext.disabled = false;
+      lockInputs();
     });
 
     elNext.addEventListener('click', nextPokemon);
 
-    // ── Helpers ───────────────────────────────────────────────────────────
+    function lockInputs() {
+      elInput.disabled = true; elValidate.disabled = true;
+      elSkip.disabled = true; elNext.disabled = false;
+    }
+
     function setLoading(on) {
       elLoading.style.display = on ? 'block' : 'none';
       elImgWrap.style.display = on ? 'none' : (state.currentPokemon?.sprite ? 'block' : 'none');
@@ -739,21 +821,14 @@
 
     function resetUI() {
       state.answered = false;
-      elFeedback.className = 'feedback';
-      elFeedback.textContent = '';
-      elInput.value = '';
-      elInput.disabled = true;
-      elValidate.disabled = true;
-      elSkip.disabled = true;
-      elNext.disabled = true;
-      elBtnPlay.disabled = true;
-      elSprite.className = 'hidden-sprite';
-      hideAc();
+      elFeedback.className = 'feedback'; elFeedback.textContent = '';
+      elInput.value = ''; elInput.disabled = true;
+      elValidate.disabled = true; elSkip.disabled = true;
+      elNext.disabled = true; elBtnPlay.disabled = true;
+      elSprite.className = 'hidden-sprite'; hideAc();
     }
 
-    function revealSprite() {
-      elSprite.className = 'revealed-sprite';
-    }
+    function revealSprite() { elSprite.className = 'revealed-sprite'; }
 
     function showFeedback(type, msg) {
       elFeedback.className = 'feedback ' + type;
@@ -766,13 +841,11 @@
       elTotal.textContent = state.total;
     }
 
-    function capitalize(str) {
-      return str.charAt(0).toUpperCase() + str.slice(1);
-    }
+    function capitalize(str) { return str.charAt(0).toUpperCase() + str.slice(1); }
 
-    // ── Boot ──────────────────────────────────────────────────────────────
+    buildTypeUI();
     setLoading(true);
-    loadFullList();
+    Promise.all([loadFullList(), loadTypeMap()]);
   </script>
 </body>
 </html>
