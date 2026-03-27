@@ -594,6 +594,7 @@
       elInput.disabled = false;
       elValidate.disabled = false;
       elSkip.disabled = false;
+      elInput.focus();
     }
 
     function getCryUrl() {
@@ -733,6 +734,14 @@
     });
 
     elNext.addEventListener('click', nextPokemon);
+
+    // Entrée globale : valide si en jeu, passe au suivant si déjà répondu
+    document.addEventListener('keydown', e => {
+      if (e.key !== 'Enter') return;
+      if (document.activeElement === elInput) return;
+      if (!state.answered && !elValidate.disabled) validate();
+      else if (state.answered && !elNext.disabled) nextPokemon();
+    });
 
     function lockInputs() {
       elInput.disabled = true; elValidate.disabled = true;
