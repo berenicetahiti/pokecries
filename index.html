@@ -419,6 +419,7 @@
 
     const state = {
       filteredPool: [],
+      deck: [],
       currentPokemon: null,
       currentFrName: null,
       answered: false,
@@ -454,7 +455,6 @@
     const elSpriteModeBtn = $('sprite-mode-btn');
     const elTypeFilter    = $('type-filter');
 
-    // Sprite mode: shadow → visible → hidden → shadow
     elSpriteModeBtn.addEventListener('click', () => {
       const idx = SPRITE_MODES.indexOf(state.spriteMode);
       state.spriteMode = SPRITE_MODES[(idx + 1) % SPRITE_MODES.length];
@@ -472,7 +472,6 @@
       }
     }
 
-    // Generations
     document.querySelectorAll('.gen-btn').forEach(btn => {
       state.activeGens.add(btn.dataset.start + '-' + btn.dataset.end);
       btn.addEventListener('click', () => {
@@ -489,7 +488,6 @@
       });
     });
 
-    // Types UI
     function buildTypeUI() {
       TYPE_INFO.forEach(t => {
         const btn = document.createElement('button');
@@ -553,14 +551,27 @@
         });
       }
       state.filteredPool = pool;
+      state.deck = [];
+    }
+
+    function shuffle(arr) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a;
     }
 
     async function nextPokemon() {
       const pool = state.filteredPool.length > 0 ? state.filteredPool : fullList;
       if (pool.length === 0) return;
+
+      if (state.deck.length === 0) state.deck = shuffle(pool);
+      const pick = state.deck.pop();
+
       setLoading(true);
       resetUI();
-      const pick = pool[Math.floor(Math.random() * pool.length)];
       try {
         const [pokeRes, speciesRes] = await Promise.all([
           fetch(`https://pokeapi.co/api/v2/pokemon/${pick.id}`),
@@ -736,7 +747,6 @@
 
     elNext.addEventListener('click', nextPokemon);
 
-    // Entrée globale : passe au suivant si déjà répondu
     document.addEventListener('keydown', e => {
       if (e.key !== 'Enter') return;
       if (state.answered && !elNext.disabled) nextPokemon();
